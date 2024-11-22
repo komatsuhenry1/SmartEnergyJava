@@ -1,0 +1,31 @@
+CREATE TABLE tb_salas (
+    id_sala NUMBER(5) PRIMARY KEY NOT NULL,
+    nome VARCHAR2(40) NOT NULL,
+    capacidade NUMBER(10) NOT NULL,
+    ar_ligado NUMBER(5) NOT NULL,
+    temperatura_atual NUMBER(5) NOT NULL,
+    potencia_ar NUMBER(5) NOT NULL
+);
+
+CREATE TABLE tb_sensores (
+    id_sensores NUMBER(5) PRIMARY KEY NOT NULL,
+    tipo VARCHAR2(50) NOT NULL,
+    sala_id NUMBER(5) NOT NULL,
+    FOREIGN KEY (sala_id) REFERENCES tb_salas(id_sala)
+);
+
+CREATE TABLE tb_registros_movimento (
+    id_evento_movimento NUMBER(5) PRIMARY KEY NOT NULL,
+    sensor_id NUMBER(5) NOT NULL,
+    detectado NUMBER(1) DEFAULT 0 NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sensor_id) REFERENCES tb_sensores(id_sensores)
+);
+
+CREATE TABLE tb_registros_temperatura (
+    id_evento_temperatura NUMBER(5) PRIMARY KEY NOT NULL,
+    sensor_id NUMBER(5) NOT NULL,
+    temperatura NUMBER(5) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sensor_id) REFERENCES tb_sensores(id_sensores)
+);
